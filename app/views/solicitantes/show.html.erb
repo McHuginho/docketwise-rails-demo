@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @solicitante %>
+
+<div>
+  <%= link_to "Edit this solicitante", edit_solicitante_path(@solicitante) %> |
+  <%= link_to "Back to solicitantes", solicitantes_path %>
+
+  <%= button_to "Destroy this solicitante", @solicitante, method: :delete %>
+</div>
+
+<br>
+<%= link_to "📄 Descargar PDF Oficial", solicitante_path(@solicitante, format: :pdf), class: "button-pdf", style: "background: red; color: white; padding: 10px; text-decoration: none; border-radius: 5px;" %>
