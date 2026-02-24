@@ -1,13 +1,32 @@
-<p style="color: green"><%= notice %></p>
+<div class="row justify-content-center mt-5">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+        <h4 class="mb-0 fw-bold">Expediente Legal</h4>
+        <% if @solicitante.aprobado %>
+          <span class="badge bg-success fs-6 shadow-sm">APROBADO</span>
+        <% else %>
+          <span class="badge bg-warning text-dark fs-6 shadow-sm">PENDIENTE</span>
+        <% end %>
+      </div>
+      
+      <div class="card-body p-5 text-center">
+        <h1 class="display-5 fw-bold text-dark mb-1"><%= @solicitante.nombre %></h1>
+        <p class="text-muted fs-5 mb-5"><%= @solicitante.email %></p>
 
-<%= render @solicitante %>
+        <%= link_to solicitante_path(@solicitante, format: :pdf), class: "btn btn-danger btn-lg shadow px-5 py-3 rounded-pill fw-bold", target: "_blank" do %>
+          <span class="fs-5">📄 Descargar PDF Oficial</span>
+        <% end %>
+      </div>
 
-<div>
-  <%= link_to "Edit this solicitante", edit_solicitante_path(@solicitante) %> |
-  <%= link_to "Back to solicitantes", solicitantes_path %>
-
-  <%= button_to "Destroy this solicitante", @solicitante, method: :delete %>
+      <div class="card-footer bg-light p-3 d-flex justify-content-between align-items-center">
+        <%= link_to "⬅ Volver", solicitantes_path, class: "btn btn-outline-secondary fw-bold" %>
+        <div>
+          <%= link_to "✏️ Editar", edit_solicitante_path(@solicitante), class: "btn btn-outline-primary fw-bold" %>
+          
+          <%= button_to "🗑️ Eliminar", @solicitante, method: :delete, form: { class: "d-inline" }, data: { turbo_confirm: "¿Estás seguro de eliminar este expediente?" }, class: "btn btn-outline-danger fw-bold ms-2" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<br>
-<%= link_to "📄 Descargar PDF Oficial", solicitante_path(@solicitante, format: :pdf), class: "button-pdf", style: "background: red; color: white; padding: 10px; text-decoration: none; border-radius: 5px;" %>

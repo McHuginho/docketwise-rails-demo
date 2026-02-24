@@ -1,9 +1,8 @@
-<%= form_with(model: solicitante) do |form| %>
+<%= form_with(model: solicitante, class: "needs-validation") do |form| %>
   <% if solicitante.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(solicitante.errors.count, "error") %> prohibited this solicitante from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger shadow-sm">
+      <h5 class="alert-heading"><%= pluralize(solicitante.errors.count, "error") %> impidieron guardar:</h5>
+      <ul class="mb-0">
         <% solicitante.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,22 +10,22 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :nombre, style: "display: block" %>
-    <%= form.text_field :nombre %>
+  <div class="mb-3">
+    <%= form.label :nombre, class: "form-label fw-bold text-secondary" %>
+    <%= form.text_field :nombre, class: "form-control form-control-lg shadow-sm", placeholder: "Ej. Jane Doe" %>
   </div>
 
-  <div>
-    <%= form.label :aprobado, style: "display: block" %>
-    <%= form.checkbox :aprobado %>
+  <div class="mb-4">
+    <%= form.label :email, class: "form-label fw-bold text-secondary" %>
+    <%= form.text_field :email, class: "form-control form-control-lg shadow-sm", placeholder: "correo@ejemplo.com" %>
   </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+  <div class="mb-4 form-check form-switch">
+    <%= form.check_box :aprobado, class: "form-check-input" %>
+    <%= form.label :aprobado, "Marcar expediente como Aprobado", class: "form-check-label fw-bold text-dark" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="d-grid gap-2 mt-4">
+    <%= form.submit "Guardar Solicitante", class: "btn btn-success btn-lg shadow-sm fw-bold" %>
   </div>
 <% end %>
