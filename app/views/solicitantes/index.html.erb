@@ -1,16 +1,40 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Solicitantes" %>
-
-<h1>Solicitantes</h1>
-
-<div id="solicitantes">
-  <% @solicitantes.each do |solicitante| %>
-    <%= render solicitante %>
-    <p>
-      <%= link_to "Show this solicitante", solicitante %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="display-5 fw-bold text-dark">Expedientes Legales</h1>
+  <%= link_to "➕ Nuevo Solicitante", new_solicitante_path, class: "btn btn-primary shadow-sm" %>
 </div>
 
-<%= link_to "New solicitante", new_solicitante_path %>
+<div class="card shadow-sm">
+  <div class="card-body p-0">
+    <table class="table table-hover table-striped mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>Nombre del Cliente</th>
+          <th>Email de Contacto</th>
+          <th>Estado</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @solicitantes.each do |solicitante| %>
+          <tr>
+            <td class="align-middle fw-bold"><%= solicitante.nombre %></td>
+            <td class="align-middle"><%= solicitante.email %></td>
+            
+            <td class="align-middle">
+              <% if solicitante.aprobado %>
+                <span class="badge bg-success">Aprobado</span>
+              <% else %>
+                <span class="badge bg-warning text-dark">Pendiente</span>
+              <% end %>
+            </td>
+
+            <td class="align-middle text-center">
+              <%= link_to "Ver Perfil", solicitante, class: "btn btn-sm btn-outline-info" %>
+              <%= link_to "Editar", edit_solicitante_path(solicitante), class: "btn btn-sm btn-outline-secondary" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
