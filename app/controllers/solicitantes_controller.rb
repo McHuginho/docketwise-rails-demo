@@ -10,39 +10,31 @@ class SolicitantesController < ApplicationController
 
   # GET /solicitantes/1 or /solicitantes/1.json
   def show
-    # @solicitante ya lo busca Rails automáticamente antes de entrar aquí
-    
     respond_to do |format|
-      # 1. Si piden HTML (navegador normal), muestra la vista de siempre
       format.html 
       
-      # 2. Si piden PDF, generamos el documento al vuelo
       format.pdf do
-        pdf = Prawn::Document.new
-        pdf.text "DOCKETWISE PRO", size: 30, style: :bold
-        pdf.move_down 20
-        pdf.text "Expediente: #{@solicitante.nombre}"
-        pdf.text "Email: #{@solicitante.email}"
-        pdf.text "Estado: #{@solicitante.aprobado ? 'APROBADO' : 'PENDIENTE'}"
+        # Aquí instanciamos nuestro Service Object y llamamos al método .call
+        pdf_binario = GeneradorExpedienteService.new(@solicitante).call
         
-        send_data pdf.render, 
+        send_data pdf_binario, 
           filename: "expediente_#{@solicitante.nombre}.pdf",
           type: "application/pdf",
-          disposition: "inline" # "inline" lo abre en el navegador, "attachment" lo descarga directo
+          disposition: "inline"
       end
     end
   end
 
-  # GET /solicitantes/new
+  
   def new
     @solicitante = Solicitante.new
   end
 
-  # GET /solicitantes/1/edit
+  
   def edit
   end
 
-  # POST /solicitantes or /solicitantes.json
+  
   def create
     @solicitante = Solicitante.new(solicitante_params)
 
@@ -57,7 +49,7 @@ class SolicitantesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /solicitantes/1 or /solicitantes/1.json
+  
   def update
     respond_to do |format|
       if @solicitante.update(solicitante_params)
@@ -70,7 +62,7 @@ class SolicitantesController < ApplicationController
     end
   end
 
-  # DELETE /solicitantes/1 or /solicitantes/1.json
+  
   def destroy
     @solicitante.destroy!
 
@@ -81,12 +73,12 @@ class SolicitantesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    
     def set_solicitante
       @solicitante = Solicitante.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
+    
     def solicitante_params
       params.expect(solicitante: [ :nombre, :aprobado, :email ])
     end
