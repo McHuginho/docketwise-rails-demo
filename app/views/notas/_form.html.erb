@@ -1,0 +1,16 @@
+<%= form_with(model: nota, url: nota.new_record? ? notas_path : nota_path(nota), class: "card shadow-sm p-4 mt-3") do |form| %>
+  <div class="mb-3">
+    <%= form.label :solicitante_id, "Seleccionar Cliente:", class: "form-label fw-bold" %>
+    <%= form.collection_select :solicitante_id, Solicitante.all, :id, :nombre, { prompt: "Elige un cliente..." }, class: "form-select shadow-sm" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :contenido, "Contenido de la nota legal:", class: "form-label fw-bold" %>
+    <%= form.text_area :contenido, rows: 4, class: "form-control shadow-sm", placeholder: "Escribe los detalles aquí..." %>
+  </div>
+
+  <div>
+    <%= form.submit "Guardar Nota", class: "btn btn-success fw-bold shadow-sm" %>
+    <%= link_to "Cancelar", notas_path, class: "btn btn-outline-secondary ms-2" %>
+  </div>
+<% end %>

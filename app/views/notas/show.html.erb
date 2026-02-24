@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @notum %>
+
+<div>
+  <%= link_to "Edit this notum", edit_notum_path(@notum) %> |
+  <%= link_to "Back to nota", nota_path %>
+
+  <%= button_to "Destroy this notum", @notum, method: :delete %>
+</div>
