@@ -5,7 +5,7 @@ class SolicitantesController < ApplicationController
 
   # GET /solicitantes or /solicitantes.json
   def index
-    @solicitantes = Solicitante.all
+    @solicitantes = current_user.solicitantes
   end
 
   # GET /solicitantes/1 or /solicitantes/1.json
@@ -36,7 +36,7 @@ class SolicitantesController < ApplicationController
 
   
   def create
-    @solicitante = Solicitante.new(solicitante_params)
+    @solicitante = current_user.solicitantes.build(solicitante_params)
 
     respond_to do |format|
       if @solicitante.save
@@ -75,7 +75,7 @@ class SolicitantesController < ApplicationController
   private
     
     def set_solicitante
-      @solicitante = Solicitante.find(params.expect(:id))
+      @solicitante = current_user.solicitantes.find(params[:id])
     end
 
     

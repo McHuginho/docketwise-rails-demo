@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_225733) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_10_233136) do
   create_table "nota", force: :cascade do |t|
     t.text "contenido"
     t.datetime "created_at", null: false
@@ -25,6 +25,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_225733) do
     t.string "email"
     t.string "nombre"
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_solicitantes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -40,4 +42,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_225733) do
   end
 
   add_foreign_key "nota", "solicitantes"
+  add_foreign_key "solicitantes", "users"
 end
