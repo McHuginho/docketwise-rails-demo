@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="display-5 fw-bold text-dark">Calendario de Eventos</h1>
+  
+  <div class="d-flex gap-3">
+    <%= form_with url: eventos_path, method: :get, data: { turbo_frame: "eventos_frame" } do |f| %>
+      <%= f.text_field :query, 
+                       placeholder: "🔍 Buscar evento...", 
+                       value: params[:query], 
+                       class: "form-control", 
+                       oninput: "this.form.requestSubmit()" %>
+    <% end %>
+    
+    <%= link_to "➕ Nuevo Evento", new_evento_path, class: "btn btn-primary shadow-sm" %>
+  </div>
+</div>
+
+<%= turbo_frame_tag "eventos_frame" do %>
+
+  <% if @eventos.any? %>
+    <div class="card shadow-sm">
+      <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th>Título de la Audiencia / Evento</th>
+              <th>Fecha Programada</th>
+              <th>Notas</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @eventos.each do |evento| %>
+              <tr>
+                <td class="align-middle fw-bold"><%= evento.titulo %></td>
+                <td class="align-middle">
+                  <span class="badge bg-light text-dark border"><%= evento.fecha %></span>
+                </td>
+                <td class="align-middle text-truncate" style="max-width: 250px;">
+                  <%= evento.descripcion %>
+                </td>
+                <td class="align-middle text-center">
+                  <%= link_to "Editar", edit_evento_path(evento), class: "btn btn-sm btn-outline-secondary" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  <% else %>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8 text-center py-5 bg-white rounded shadow-sm border-0">
+          
+          <% if params[:query].present? %>
+            <div class="mb-4" style="font-size: 5rem;">📅</div>
+            <h2 class="fw-bold text-dark mb-3">No hay coincidencias</h2>
+            <p class="text-muted fs-5 mb-4 px-md-5">
+              No encontramos ningún evento llamado "<strong><%= params[:query] %></strong>".
+            </p>
+          <% else %>
+            <div class="mb-4" style="font-size: 5rem;">📆</div>
+            <h2 class="fw-bold text-dark mb-3">Tu calendario está libre</h2>
+            <p class="text-muted fs-5 mb-4 px-md-5">
+              Aún no tienes audiencias ni eventos programados.
+            </p>
+            <%= link_to "➕ Agendar mi primer evento", new_evento_path, class: "btn btn-primary btn-lg fw-bold shadow-sm px-4 py-3" %>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+<% end %>

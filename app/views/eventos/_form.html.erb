@@ -1,0 +1,36 @@
+<%= form_with(model: evento, class: "card shadow-sm border-0") do |form| %>
+  <div class="card-body p-4">
+    <h3 class="fw-bold text-dark mb-4">Detalles del Evento</h3>
+
+    <% if evento.errors.any? %>
+      <div class="alert alert-danger" style="color: red">
+        <h2><%= pluralize(evento.errors.count, "error") %> prohibited this evento from being saved:</h2>
+        <ul>
+          <% evento.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= form.label :titulo, "Título de la Audiencia / Evento", class: "form-label fw-semibold text-muted" %>
+      <%= form.text_field :titulo, class: "form-control form-control-lg border-2", placeholder: "Ej: Audiencia de Asilo" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :fecha, "Fecha Programada", class: "form-label fw-semibold text-muted" %>
+      <%= form.date_field :fecha, class: "form-control form-control-lg border-2" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :descripcion, "Notas / Descripción", class: "form-label fw-semibold text-muted" %>
+      <%= form.text_area :descripcion, rows: 4, class: "form-control border-2", placeholder: "Agrega detalles adicionales aquí..." %>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+      <%= link_to "Cancelar", eventos_path, class: "btn btn-outline-secondary px-4 py-2" %>
+      <%= form.submit "Agendar Evento", class: "btn btn-primary px-4 py-2 fw-bold" %>
+    </div>
+  </div>
+<% end %>

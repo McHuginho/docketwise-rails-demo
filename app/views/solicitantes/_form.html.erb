@@ -1,31 +1,36 @@
-<%= form_with(model: solicitante, class: "needs-validation") do |form| %>
-  <% if solicitante.errors.any? %>
-    <div class="alert alert-danger shadow-sm">
-      <h5 class="alert-heading"><%= pluralize(solicitante.errors.count, "error") %> impidieron guardar:</h5>
-      <ul class="mb-0">
-        <% solicitante.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: solicitante, class: "card shadow-sm border-0") do |form| %>
+  <div class="card-body p-4">
+    <h3 class="fw-bold text-dark mb-4">Detalles del Solicitante</h3>
+
+    <% if solicitante.errors.any? %>
+      <div class="alert alert-danger" style="color: red">
+        <h2><%= pluralize(solicitante.errors.count, "error") %> prohibited this solicitante from being saved:</h2>
+        <ul>
+          <% solicitante.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= form.label :nombre, "Nombre Completo", class: "form-label fw-semibold text-muted" %>
+      <%= form.text_field :nombre, class: "form-control form-control-lg border-2", placeholder: "Ej: Juan Pérez" %>
     </div>
-  <% end %>
 
-  <div class="mb-3">
-    <%= form.label :nombre, class: "form-label fw-bold text-secondary" %>
-    <%= form.text_field :nombre, class: "form-control form-control-lg shadow-sm", placeholder: "Ej. Jane Doe" %>
-  </div>
+    <div class="mb-3">
+      <%= form.label :email, "Correo Electrónico", class: "form-label fw-semibold text-muted" %>
+      <%= form.email_field :email, class: "form-control form-control-lg border-2", placeholder: "juan.perez@ejemplo.com" %>
+    </div>
 
-  <div class="mb-4">
-    <%= form.label :email, class: "form-label fw-bold text-secondary" %>
-    <%= form.text_field :email, class: "form-control form-control-lg shadow-sm", placeholder: "correo@ejemplo.com" %>
-  </div>
+    <div class="mb-4 d-flex align-items-center gap-2">
+      <%= form.check_box :aprobado, class: "form-check-input" %>
+      <%= form.label :aprobado, "¿Expediente Aprobado?", class: "form-check-label fw-semibold text-muted" %>
+    </div>
 
-  <div class="mb-4 form-check form-switch">
-    <%= form.check_box :aprobado, class: "form-check-input" %>
-    <%= form.label :aprobado, "Marcar expediente como Aprobado", class: "form-check-label fw-bold text-dark" %>
-  </div>
-
-  <div class="d-grid gap-2 mt-4">
-    <%= form.submit "Guardar Solicitante", class: "btn btn-success btn-lg shadow-sm fw-bold" %>
+    <div class="d-flex justify-content-end gap-2">
+      <%= link_to "Cancelar", solicitantes_path, class: "btn btn-outline-secondary px-4 py-2" %>
+      <%= form.submit "Guardar Expediente", class: "btn btn-primary px-4 py-2 fw-bold" %>
+    </div>
   </div>
 <% end %>

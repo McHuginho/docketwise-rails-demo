@@ -1,0 +1,7 @@
+<%= turbo_stream.prepend "lista_notas", partial: "notas/nota", locals: { nota: @nota } %>
+
+<%= turbo_stream.remove "mensaje_sin_notas" %>
+
+<%= turbo_stream.replace "formulario_nueva_nota" do %>
+  <%= render partial: "notas/form", locals: { solicitante: @solicitante, nota: Nota.new } %>
+<% end %>
