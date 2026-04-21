@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  nombre: MyString
+  nombre: Hugo Martinez
   aprobado: false
-  email: MyString
+  email: hugo@test.com
+  user: one
 
 two:
-  nombre: MyString
+  nombre: Maria Garcia
   aprobado: false
-  email: MyString
+  email: maria@test.com
+  user: two
