@@ -7,11 +7,11 @@ class SolicitantesController < ApplicationController
   def index
       if params[:query].present?
         # ILIKE hace que busque sin importar si escriben en mayúsculas o minúsculas
-        @solicitantes = Solicitante.where("LOWER(nombre) LIKE LOWER(?)", "%#{params[:query]}%")
+        @solicitantes = current_user.solicitantes.where("LOWER(nombre) LIKE LOWER(?)", "%#{params[:query]}%")
       else
-        @solicitantes = Solicitante.all
+        @solicitantes = current_user.solicitantes.all
       end
-end
+  end
   
 
   # GET /solicitantes/1 or /solicitantes/1.json
@@ -40,14 +40,6 @@ end
   def edit
   end
 
-  # PATCH/PUT /solicitantes/1
-  def update
-    if @solicitante.update(solicitante_params)
-      redirect_to solicitantes_path, notice: "Expediente actualizado con éxito."
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
   
   def create
     @solicitante = current_user.solicitantes.build(solicitante_params)
