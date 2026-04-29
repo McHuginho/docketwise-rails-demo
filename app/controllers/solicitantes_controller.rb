@@ -7,9 +7,9 @@ class SolicitantesController < ApplicationController
   def index
       if params[:query].present?
         # ILIKE hace que busque sin importar si escriben en mayúsculas o minúsculas
-        @solicitantes = current_user.solicitantes.where("LOWER(nombre) LIKE LOWER(?)", "%#{params[:query]}%")
+        @solicitantes = current_user.solicitantes.where("LOWER(nombre) LIKE LOWER(?)", "%#{params[:query]}%").order(:nombre)
       else
-        @solicitantes = current_user.solicitantes.all
+        @solicitantes = current_user.solicitantes.order(:nombre)
       end
   end
   
